@@ -227,7 +227,12 @@ export default {
         return columns[index].realWidth;
       }
       const widthArr = columns.map(({ realWidth }) => realWidth).slice(index, index + colspan);
-      return widthArr.reduce((acc, width) => acc + width, -1);
+      // (修改前)存在widthArr => null
+      // return widthArr.reduce((acc, width) => acc + width, -1);
+
+      // (修改后)过滤非法值 null
+      const validArr = widthArr.filter(item => item)
+      return validArr.length ? validArr.reduce((acc, width) => acc + width, -1) : null;
     },
 
     handleCellMouseEnter(event, row) {
